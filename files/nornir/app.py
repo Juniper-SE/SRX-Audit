@@ -1,5 +1,6 @@
-from nornir_pyez.plugins.tasks import pyez_sec_policy
+from nornir_pyez.plugins.tasks import pyez_rpc
 from nornir import InitNornir
+from rich import print
 
 import os
 
@@ -9,8 +10,12 @@ nr = InitNornir(config_file=f"{script_dir}/config.yaml")
 
 firewall = nr.filter(name="juniper-srx-garage0")
 
+extras = {
+    "less-than": "1"
+}
+
 response = firewall.run(
-    task=pyez_sec_policy
+    task=pyez_rpc, func='get-security-policies-hit-count', extras=extras
 )
 
 # response is an AggregatedResult, which behaves like a list
