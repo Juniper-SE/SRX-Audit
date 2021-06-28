@@ -1,0 +1,36 @@
+---
+juniper-srx-garage0:
+    hostname: juniper-srx-garage0
+    groups:
+        - firewalls
+    data:
+        node_type: 'firewall'
+        cluster:
+            status: True
+            fabric: 'ge-0/0/2'
+            id: 1
+            node: 0
+
+juniper-vsrx0:
+    hostname: juniper-vsrx0
+    groups:
+        - firewalls
+    data:
+        node_type: 'firewall'
+        cluster:
+            status: True
+            fabric: 'ge-0/0/0'
+            id: 1
+            node: 0
+
+juniper-srx-office0:
+    hostname: juniper-srx-office0
+    groups:
+        - firewalls
+    data:
+        node_type: 'firewall'
+        cluster:
+            status: True
+            fabric: 'ge-0/0/6'
+            id: 1
+            node: 0

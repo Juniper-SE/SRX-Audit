@@ -1,29 +1,20 @@
-from jnpr.junos import Device
-from lxml import etree
-import xml.dom.minidom
+from nornir_pyez.plugins.tasks import pyez_sec_policy
+from nornir import InitNornir
 
+import os
 
-xpath_physical_interface_names = '//physical-interface/name/text()'
-xpath_logical_interface_names = '//physical-interface/logical-interface/name/text()'
-xpath_physical_and_logical_interface_names = '//physical-interface/name/text()|//physical-interface/logical-interface/name/text()'
-xpath_physical_and_logical_interface_xml = '//physical-interface|//physical-interface/logical-interface'
-xpath_physical_logical_interface_names_irb = 'physical-interface/logical-interface[contains(name, "irb")]/name/text()'
-xpath_physical_logical_interface_names_ge = 'physical-interface/logical-interface[contains(name, "ge")]/name/text()'
+script_dir = os.path.dirname(os.path.realpath(__file__))
 
-with Device(host='ce1', user='automation', password='juniper123') as network_device:
-    rpc = network_device.rpc.get_interface_information(extensive=True)
-    physical_logical_interface_names_ge = rpc.xpath(xpath_physical_logical_interface_names_ge)
+nr = InitNornir(config_file=f"{script_dir}/config.yaml")
 
-    for each in physical_logical_interface_names_ge:
-        each = each.rstrip('\n')
-        print(each)
+firewall = nr.filter(name="juniper-srx-garage0")
 
-    # physical_interface_names = rpc.xpath(xpath_physical_interface_names)
-    # logical_interface_names = rpc.xpath(xpath_logical_interface_names)
-    # physical_and_logical_interface_names = rpc.xpath(xpath_physical_and_logical_interface_names)
-    # physical_and_logical_interface_xml = rpc.xpath(xpath_physical_and_logical_interface_xml)
-    # physical_logical_interface_names_irb = rpc.xpath(xpath_physical_logical_interface_names_irb)
-    # for each in rpc.xpath(xpath_physical_and_logical_interface_xml):
-    #     xml_minidom = xml.dom.minidom.parseString(etree.tostring(each))
-    #     interface_xml_pretty = xml_minidom.toprettyxml()
-    #     print(interface_xml_pretty)
+response = firewall.run(
+    task=pyez_sec_policy
+)
+
+# response is an AggregatedResult, which behaves like a list
+# there is a response object for each device in inventory
+devices = []
+for dev in response:
+    print(response[dev].result)

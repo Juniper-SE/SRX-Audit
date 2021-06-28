@@ -1,0 +1,12 @@
+---
+inventory:
+    plugin: YAMLInventory
+    options:
+        host_file: 'inventory/hosts.yaml'
+        group_file: 'groups/groups.yaml'
+        defaults_file: 'defaults/defaults.yaml'
+
+runner:
+    plugin: threaded
+    options:
+        num_workers: 10

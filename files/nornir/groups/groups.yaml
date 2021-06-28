@@ -1,0 +1,5 @@
+---
+firewalls:
+    data:
+        dns_server: '192.168.101.10'
+        ntp_server: '192.168.106.254'
