@@ -1,0 +1,5 @@
+junos-eznc==2.6.1
+jxmlease==1.0.3
+invoke==1.5.0
+nornir==3.1.1
+nornir-pyez==0.0.10
