@@ -18,8 +18,5 @@ response = firewall.run(
     task=pyez_rpc, func='get-security-policies-hit-count', extras=extras
 )
 
-# response is an AggregatedResult, which behaves like a list
-# there is a response object for each device in inventory
-devices = []
 for dev in response:
     print(response[dev].result)
