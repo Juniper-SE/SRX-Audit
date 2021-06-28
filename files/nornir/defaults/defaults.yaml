@@ -1,0 +1,6 @@
+  
+---
+firewalls:
+    username: 'automation'
+    password: 'juniper123'
+    platform: junos
